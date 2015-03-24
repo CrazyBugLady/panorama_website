@@ -1,8 +1,6 @@
 <?php
 	namespace PanoramaWebsite;
 	
-	require_once("BusinessObjects/Camera.php");
-	
 	/*
 	* Klasse, die dafür zuständig ist, alle Interaktionen mit Panoramafunktionen zu managen
 	*/
@@ -46,8 +44,8 @@
 		*/
 		public static function getCurrentTempImage($filepath, $width, $height) {
 			print '<a href="'.$filepath.'">
-			<img src="'.$filepath.'" width="'.$width.'" height="'.$height.'" />
-			</a>'; 
+						<img id="tempimg" src="'.$filepath.'" width="'.$width.'" height="'.$height.'" />
+				   </a>'; 
 		}
 		
 		/**

@@ -1,8 +1,7 @@
 <?php
 	include_once("app/includes/config.php");
+	require_once("BusinessObjects/Camera.php");
 	include_once("app/PanoramaManager.php");
-	
-	PanoramaWebsite\PanoramaManager::createNewPanorama(ARCHIVE_DIR, TEMP_DIR);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +48,8 @@
       <div class="jumbotron">
         <h1>Aktuell</h1>
         <p><?php echo PanoramaWebsite\PanoramaManager::getCurrentTempImage(TEMP_DIR . "/" . TEMP_NAME, 1000, 300); ?></p>
-		<p><button id="makePanorama" class="btn btn-primary">Bildschirmaufnahme starten</button> <button class="btn btn-danger">Bilder älter als 14 Tage löschen</button></p>
+		<p><button id="makePanorama" class="btn btn-primary">Bildschirmaufnahme starten</button> 
+		<button id="removePanorama" class="btn btn-danger">Bilder älter als 14 Tage löschen</button></p>
       </div>
 	
 	<?php
