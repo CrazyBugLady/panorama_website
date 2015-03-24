@@ -1,7 +1,7 @@
 <?php
-	require_once("./app/includes/config.php");
-	require_once("./app/BusinessObjects/Camera.php");
-	include_once("./app/PanoramaManager.php");
+	require_once("../app/includes/config.php");
+	require_once("../app/BusinessObjects/Camera.php");
+	include_once("../app/PanoramaManager.php");
 
 	$saveTemporarily = true;
 
@@ -10,5 +10,5 @@
 		$saveTemporarily = $_POST["saveTemporarily"];
 	}
 	
-	PanoramaWebsite\PanoramaManager::createNewPanorama("./".ARCHIVE_DIR, "./".TEMP_DIR, $saveTemporarily);
+	PanoramaWebsite\PanoramaManager::createNewPanorama("../".ARCHIVE_DIR, "../".TEMP_DIR, $saveTemporarily);
 ?>

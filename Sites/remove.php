@@ -1,7 +1,7 @@
 <?php
-	require_once("./app/includes/config.php");
-	require_once("./app/BusinessObjects/Camera.php");
-	include_once("./app/PanoramaManager.php");
+	require_once("../app/includes/config.php");
+	require_once("../app/BusinessObjects/Camera.php");
+	include_once("../app/PanoramaManager.php");
 
 	$days = 14;
 	
@@ -10,6 +10,6 @@
 		$days = $_POST["days"];
 	}
 	
-	PanoramaWebsite\PanoramaManager::removePanoramas($days, "./".ARCHIVE_DIR);
+	PanoramaWebsite\PanoramaManager::removePanoramas($days, "../".ARCHIVE_DIR);
   
 ?>

@@ -1,6 +1,6 @@
 <?php
 	include_once("app/includes/config.php");
-	require_once("BusinessObjects/Camera.php");
+	require_once("app/BusinessObjects/Camera.php");
 	include_once("app/PanoramaManager.php");
 ?>
 <!DOCTYPE html>
@@ -36,8 +36,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#archive">Archive</a></li>
+            <li <?php if(array_key_exists("site", $_GET) == false || $_GET["site"] != "archive") { echo "class='active'"; }  ?>><a href="index.php">Home</a></li>
+            <li <?php if(array_key_exists("site", $_GET) && $_GET["site"] == "archive") { echo "class='active'"; }  ?>><a href="?site=archive">Archive</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -48,6 +48,7 @@
       <div class="jumbotron">
         <h1>Aktuell</h1>
         <p><?php echo PanoramaWebsite\PanoramaManager::getCurrentTempImage(TEMP_DIR . "/" . TEMP_NAME, 1000, 300); ?></p>
+		<p id="timeInformationImage"></p>
 		<p><button id="makePanorama" class="btn btn-primary">Bildschirmaufnahme starten</button> 
 		<button id="removePanorama" class="btn btn-danger">Bilder älter als 14 Tage löschen</button></p>
       </div>
@@ -62,5 +63,6 @@
 	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/custom.js"></script>
   </body>
 </html>

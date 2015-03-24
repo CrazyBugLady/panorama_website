@@ -31,7 +31,7 @@
 			$ArchiveFolderContent = opendir($ArchivePath ."/". $Folder);
 			
 			while(false !== ($tempContent = readdir($ArchiveFolderContent))) {
-				if(is_dir($ArchivePath . "/" . $Folder . "/" . $tempContent) == false && $ArchiveFolderTemp != "." && $ArchiveFolderTemp != "..") {
+				if(is_dir($ArchivePath . "/" . $Folder . "/" . $tempContent) == false && $tempContent != "." && $tempContent != "..") {
 					array_push($imageLinks, $tempContent);
 				}
 			}
