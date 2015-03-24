@@ -39,7 +39,7 @@ $(document).ready(function(){
 		$.ajax({
 			method: "POST",
 			url: "http://localhost/panorama_website/Sites/remove.php",
-			data: { days: "14" }
+			data: { days: 14 }
 		})
 		.done(function( msg ) {
 			$("#tempimg").attr("src", "http://localhost/panorama_website/Resources/Images/Temp/temp.jpg"); // force the application to reload
