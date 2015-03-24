@@ -20,3 +20,7 @@ body {
 .theme-showcase .navbar .container {
   width: auto;
 }
+
+#timeInformationImage {
+	font-size: 10px;
+}

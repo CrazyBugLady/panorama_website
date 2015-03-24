@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	refreshTempImg();
+	
 	// Eventhandler für den Button makePanorama
 	$("#makePanorama").click(function(){
 		createPanorama();
@@ -12,12 +14,27 @@ $(document).ready(function(){
 	
 	// Eventhandler für das Select archiveFolder
 	$("#archiveFolder").change(function(){
-		getMoreFolders($("#archiveFolder").val());	
+		if($("#archiveFolder").val() === "---")
+		{
+			$("#archiveFolderTwo").hide();
+			$("#ArchiveImages").hide();
+		}	
+		else
+		{
+			getMoreFolders($("#archiveFolder").val());	
+		}
 	});
 	
 	// Eventhandler für das Select archiveFolderTwo
 	$("#archiveFolderTwo").change(function(){
-		getImages($("#archiveFolder").val() + "/" + $("#archiveFolderTwo").val())
+		if($("#archiveFolderTwo").val() === "---")
+		{
+			$("#ArchiveImages").hide();
+		}	
+		else
+		{
+			getImages($("#archiveFolder").val() + "/" + $("#archiveFolderTwo").val())
+		}
 	});
 	
 	// Funktion, die ein Panoramabild erstellen soll
@@ -29,7 +46,9 @@ $(document).ready(function(){
 			data: { saveTemporarily: "true" }
 		})
 		.done(function( msg ) {
-			$("#tempimg").attr("src", "http://localhost/panorama_website/Resources/Images/Temp/temp.jpg"); // force the application to reload
+			$("#panoramaActions").html("Bild erfolgreich erstellt");
+			$("#panoramaActions").addClass("alert alert-success");
+			refreshTempImg();
 		});
 	}
 	
@@ -42,20 +61,32 @@ $(document).ready(function(){
 			data: { days: 14 }
 		})
 		.done(function( msg ) {
-			$("#tempimg").attr("src", "http://localhost/panorama_website/Resources/Images/Temp/temp.jpg"); // force the application to reload
+			$("#panoramaActions").html("Bilder gelöscht!");
+			$("#panoramaActions").addClass("alert alert-success");
+			refreshTempImg();
 		});
 	}
 	
-	// Timeout to refresh the image every now and then
+	// Funktion, die das aktuelle temporär gespeicherte Bild refresht, um zu prüfen, ob es sich unterdessen geändert hat
+	function refreshTempImg()
+	{
+		var d = new Date();
+		var day = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
+		var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		
+		$("#tempimg").attr("src", "http://localhost/panorama_website/Resources/Images/Temp/temp.jpg"); // force the application to reload
+		$("#timeInformationImage").html("Zuletzt aktualisiert am " + day + " um " + time);
+	}
+	
+	// Jede Minute wird das Bild neu gesetzt, um zu überprüfen, ob es sich unterdessen geändert hat
 	setTimeout(function() {
-      $("#tempimg").attr("src", "http://localhost/panorama_website/Resources/Images/Temp/temp.jpg"); // force the application to reload
-	  $("#timeInformationImage").clear();
-	  $("#timeInformationImage").html("Zuletzt aktualisiert um " + $.now());
-	}, 5000);
+      refreshTempImg();
+	}, 60000);
 	
 	// Funktion um Ordner und Unterordner im Archiv zu erhalten
 	function getMoreFolders(path)
 	{
+		$("#archiveFolderTwo").show().fadeIn();
 		$.ajax('http://localhost/panorama_website/Sites/getFolders.php', {
 				dataType: 'json',
 				data:	{ 
@@ -80,6 +111,7 @@ $(document).ready(function(){
 	// Funktion um die Bilder für den aktuell ausgewählten Ordner zu erhalten
 	function getImages(folder)
 	{
+		$("#ArchiveImages").show().fadeIn();
 		$.ajax('http://localhost/panorama_website/Sites/getImages.php', {
 				dataType: 'json',
 				data:	{ 

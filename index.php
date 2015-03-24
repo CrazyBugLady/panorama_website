@@ -51,6 +51,7 @@
 		<p id="timeInformationImage"></p>
 		<p><button id="makePanorama" class="btn btn-primary">Panoramaaufnahme starten</button> 
 		<button id="removePanorama" class="btn btn-danger">Bilder älter als 14 Tage löschen</button></p>
+		<p id="panoramaActions"></p>
       </div>
 	
 	<?php
