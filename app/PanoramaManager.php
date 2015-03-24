@@ -61,16 +61,20 @@
 		/*
 		* Funktion, um die Panorama Bilder, die älter als eine gewisse Anzahl Tage sind, zu löschen
 		*/
-		public static function removePanoramas($days, $ArchivePath)
+		public static function removePanoramas($days, $ArchivePath, $folderInFolder = false)
 		{
-			$FolderToDelete = date("d.m.Y", mktime(0,0,0, date("m"), date("d")-$days, date("Y")));
-			$rootDirectory = $ArchivePath . "/" . $FolderToDelete;
-			
-			if(file_exists($ArchivePath."/".$FolderToDelete)){
+			// Folder und Files innerhalb des Hauptfolders müssen ebenfalls gelöscht werden können, dafür  gibt es eine Option, die dies zulässt, der neue Name wird generiert
+			$rootDirectory = $ArchivePath;
+			if($folderInFolder == false) {
+				$FolderToDelete = date("d.m.Y", mktime(0,0,0, date("m"), date("d")-$days, date("Y")));
+				$rootDirectory .= "/" . $FolderToDelete;
+			}
+
+			if(file_exists($rootDirectory)){
 		
 				$files = array_diff(scandir($rootDirectory), array('.','..'));
 				foreach ($files as $file) {
-					(is_dir($rootDirectory."/".$file)) ? $this->removePanoramas($rootDirectory."/".$file) : unlink($rootDirectory."/".$file);
+					(is_dir($rootDirectory."/".$file)) ? self::removePanoramas(0, $rootDirectory."/".$file, true) : unlink($rootDirectory."/".$file);
 				}
 				return rmdir($rootDirectory);
 			}

@@ -5,9 +5,10 @@
 	require_once("../app/BusinessObjects/Camera.php");
 	include_once("../app/PanoramaManager.php");
 
+	// Option um einzustellen, wie viele Tage vorher die Einträge gelöscht werden sollen
 	$days = 14;
 	
-	if(array_key_exists($_REQUEST, "days"))
+	if(array_key_exists("days", $_REQUEST))
 	{
 		$days = $_REQUEST["days"];
 	}
@@ -18,5 +19,7 @@
 		$days = $_SERVER["argv"][1];
 	}
 
-		PanoramaWebsite\PanoramaManager::removePanoramas($days, "../".ARCHIVE_DIR);
+	$ArchivePath ="../".ARCHIVE_DIR; 
+	
+	PanoramaWebsite\PanoramaManager::removePanoramas($days, $ArchivePath);
 ?>
