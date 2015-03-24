@@ -6,7 +6,7 @@
 	define ('HOME', 'http://10.142.126.210/cgi-bin/camctrl.cgi?move=home');
 	define ('CUR_PIC', 'http://10.142.126.210/cgi-bin/video.jpg');
 	define ('IMGNR', 4);          //Anzahl gemachter Bilder
-	define ('CUTVAL', 20);        //Pixel welche für bessern Panoramaeffekt abgeschnitten werden
+	define ('CUTVAL', 20);        //Pixel welche für einen verbesserten Panoramaeffekt abgeschnitten werden
 	
 	/*
 	* Klasse, die dafür zuständig ist, die Interaktion mit der Kamera zu koordinieren
@@ -54,43 +54,7 @@
             }
 			imagejpeg($baseimg, $TempPath ."/temp.jpg");
 		}
-		
-		public static function getPictureDbg($count, $TempPath) {
-        
-        $dbgimg = imagecreatetruecolor(640, 480);
-        $color = imagecolorallocate($dbgimg, rand(0,255), rand(0,255), rand(0,255));
-        imagefill($dbgimg, 0, 0, $color);
-        imagepng($dbgimg, $TempPath."temp/img".$count.".png");
-        imagedestroy($dbgimg);
-  
-		}
-
-		public static function savePictureDbg($TempPath, $ArchivePath) {
-        $size = getimagesize($TempPath . "/img0.png");
-                $baseimg = imagecreatetruecolor($size[0] * IMGNR - (IMGNR*CUTVAL), $size[1]);
-                for ($i=0; $i < IMGNR; $i++) {
-                        $img = imagecreatefrompng($TempPath ."/img".$i.".png"); 
-                        imagecopy($baseimg, $img, ($size[0]-CUTVAL)*$i, 0, CUTVAL, 0, $size[0]-CUTVAL
-                        , $size[1]);
-                        imagedestroy($img);
-                }
-                
-                $curdate = date("d.m.Y-H-i");
-                
-                $filename = explode("-",$curdate);
-                
-                if(!file_exists($ArchivePath."/".$filename[0])) {
-                      mkdir($ArchivePath."/".$filename[0]);
-                }
-                if(!file_exists($ArchivePath."/".$filename[0]."/".$filename[1])) {
-                      mkdir($ArchivePath."/".$filename[0]."/".$filename[1]);
-                }
-
-                imagepng($baseimg, $ArchivePath."/".$filename[0]."/".$filename[1]."/".$filename[2].".png");
-                imagepng($baseimg,$TempPath."/temp.png");
-                
-		}
-		
+				
 		/*
 		* Funktion, um das aktuelle Bild, das gemacht wurde, zu speichern
 		*/
